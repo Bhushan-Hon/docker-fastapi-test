@@ -13,7 +13,7 @@ EXPOSE 8000
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 
-
+#Yaml 
 
 version: '3.8'
 
@@ -27,13 +27,6 @@ services:
 
 
 
-docker-compose up --build
-
-
-docker-compose down
-
-
-docker-compose up
 
 
 
@@ -62,3 +55,12 @@ def create_user(user: dict):
     with open("data/users.json", "w") as file:
         json.dump(users, file)
     return user
+
+
+docker-compose up --build
+
+
+docker-compose down
+
+
+docker-compose up
