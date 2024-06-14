@@ -1,0 +1,64 @@
+FROM python:3.9
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+
+
+
+version: '3.8'
+
+services:
+  fastapi:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+
+
+
+docker-compose up --build
+
+
+docker-compose down
+
+
+docker-compose up
+
+
+
+
+
+import json
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello, World"}
+
+@app.get("/users")
+def read_users():
+    with open("data/users.json", "r") as file:
+        users = json.load(file)
+    return users
+
+@app.post("/users")
+def create_user(user: dict):
+    with open("data/users.json", "r") as file:
+        users = json.load(file)
+    users.append(user)
+    with open("data/users.json", "w") as file:
+        json.dump(users, file)
+    return user
