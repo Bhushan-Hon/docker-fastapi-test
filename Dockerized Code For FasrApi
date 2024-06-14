@@ -13,17 +13,6 @@ EXPOSE 8000
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 
-#Yaml 
-
-version: '3.8'
-
-services:
-  fastapi:
-    build: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./data:/app/data
 
 
 
